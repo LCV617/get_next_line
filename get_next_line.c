@@ -6,7 +6,7 @@
 /*   By: ewaltz <ewaltz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 14:15:18 by ewaltz            #+#    #+#             */
-/*   Updated: 2025/12/08 15:30:50 by ewaltz           ###   ########.fr       */
+/*   Updated: 2025/12/08 17:03:15 by ewaltz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,21 @@ char	*get_next_line(int fd)
 
   if (fd < 0 || BUFFER_SIZE <= 0)
 	return (NULL);
+  while (get_index(rest) == -1)
+  {
+	bytes = read(fd, buffer, BUFFER_SIZE);
+	if (bytes < 0)
+	{
+	  free (rest);
+	  return (NULL);
+	}
+	if (bytes == 0)
+	  return;
+	if (bytes > 0)
+	{
+	  buffer[bytes] = '\0';
+	  rest = str_join(rest, buffer);
+	}
+  }
 
 }
