@@ -20,7 +20,7 @@ char	*get_next_line(int fd)
 	int				bytes;
 	int				index;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 	while (get_index(rest) == -1)
 	{

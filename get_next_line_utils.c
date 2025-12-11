@@ -6,7 +6,7 @@
 /*   By: ewaltz <ewaltz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 14:14:58 by ewaltz            #+#    #+#             */
-/*   Updated: 2025/12/11 12:15:27 by ewaltz           ###   ########.fr       */
+/*   Updated: 2025/12/11 15:32:05 by ewaltz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,16 @@ char	*get_rest(char *str, int start)
 	return (NULL);
   len = ft_strlen(str);
   if (start >= len)
+  {
+	free (str);
 	return (NULL);
+  }
   new_str = malloc(sizeof(char) * (len - start + 1));
   if (!new_str)
+  {
+	free (str);
 	return (NULL);
+  }
   while (str[start])
 	new_str[i++] = str[start++];
   new_str[i] = '\0';
