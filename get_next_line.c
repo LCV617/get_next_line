@@ -39,11 +39,16 @@ char	*get_next_line(int fd)
 		}
 	}
 	if (get_index(rest) == -1)
+    {
+	  index = ft_strlen(rest);
+	  ligne = ft_strdup(rest, index);
+	  rest = get_rest(rest, index);
+    }
+	else
 	{
-		return (rest);
+	  index = get_index(rest) + 1;
+	  ligne = ft_strdup(rest, index);
+	  rest = get_rest(rest, index);
 	}
-	index = get_index(rest) + 1;
-	ligne = ft_strdup(rest, index);
-	rest = get_rest(rest, index);
 	return (ligne);
 }
