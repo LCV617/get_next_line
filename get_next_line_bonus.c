@@ -6,7 +6,7 @@
 /*   By: ewaltz <ewaltz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 11:48:17 by ewaltz            #+#    #+#             */
-/*   Updated: 2025/12/16 11:48:40 by ewaltz           ###   ########.fr       */
+/*   Updated: 2025/12/16 12:00:35 by ewaltz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*check_params(int fd)
 {
 	char	*buffer;
 
-	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
@@ -53,7 +53,7 @@ char	*check_params(int fd)
 
 char	*get_next_line(int fd)
 {
-	static char		*rest;
+	static char		*rest[1024];
 	char			*buffer;
 	char			*ligne;
 	int				bytes;
@@ -63,18 +63,18 @@ char	*get_next_line(int fd)
 	buffer = check_params(fd);
 	if (!buffer)
 		return (NULL);
-	rest = read_buffer(rest, bytes, buffer, fd);
-	if (get_index(rest) == -1)
+	rest[fd] = read_buffer(rest[fd], bytes, buffer, fd);
+	if (get_index(rest[fd]) == -1)
 	{
-		index = ft_strlen(rest);
-		ligne = ft_strdup(rest, index);
-		rest = get_rest(rest, index);
+		index = ft_strlen(rest[fd]);
+		ligne = ft_strdup(rest[fd], index);
+		rest[fd] = get_rest(rest[fd], index);
 	}
 	else
 	{
-		index = get_index(rest) + 1;
-		ligne = ft_strdup(rest, index);
-		rest = get_rest(rest, index);
+		index = get_index(rest[fd]) + 1;
+		ligne = ft_strdup(rest[fd], index);
+		rest[fd] = get_rest(rest[fd], index);
 	}
 	return (ligne);
 }
